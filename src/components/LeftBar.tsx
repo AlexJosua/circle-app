@@ -5,6 +5,7 @@ import { FaRegHeart } from "react-icons/fa6";
 import { CgProfile } from "react-icons/cg";
 import { Button } from "./ui/button";
 import { RiLogoutBoxLine } from "react-icons/ri";
+import { CreatePost } from "./components-leftBar/CreatePost";
 
 export default function LeftBar() {
   return (
@@ -44,9 +45,7 @@ export default function LeftBar() {
         </NavLink>
       </nav>
 
-      <Button className="bg-green-400 w-full py-3 text-lg font-semibold rounded-xl mt-8 hover:bg-green-500 transition">
-        Create Post
-      </Button>
+      <CreatePost />
 
       <div className="flex-grow" />
 

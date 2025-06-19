@@ -8,6 +8,7 @@ import gambar6 from "../assets/img/media/spidey.jpeg";
 import gambar7 from "../assets/img/media/rats.jpeg";
 import gambar8 from "../assets/img/media/stone.jpeg";
 import { useState } from "react";
+import EditProfileButton from "@/features/ProfilePages/EditProfile";
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState("all");
@@ -34,9 +35,7 @@ const Profile = () => {
             className="rounded-full border-4 border-gray-900 absolute -bottom-11 left-6 w-25"
             alt="Profile"
           />
-          <button className="absolute right-6 -bottom-11 bg-gray-700 text-white px-4 py-1 rounded-full text-sm">
-            Follow
-          </button>
+          <EditProfileButton />
         </div>
         <div className="p-6 pt-12">
           <h1 className="text-2xl font-bold">✨ Albert ✨</h1>
