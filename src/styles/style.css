@@ -1,11 +1,20 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "tailwind-scrollbar-hide/v4";
 
 @custom-variant dark (&:is(.dark *));
 
 body {
   background-color: #1d1d1d;
   color: #fffbeb;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE & Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 @theme inline {
