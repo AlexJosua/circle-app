@@ -9,7 +9,7 @@ export default function MainLayout() {
       <div className="w-1/5 fixed h-screen left-0 top-0 ">
         <LeftBar />
       </div>
-      <div className="w-3/5 ml-[20%] mr-[20%] p-6 bg-[#1d1d1d] text-white">
+      <div className="w-3/5 ml-[20%] mr-[20%] p-1 bg-[#1d1d1d] text-white">
         <Outlet />
       </div>
       <div className="w-1/5 fixed h-screen right-0 top-0 ">

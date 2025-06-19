@@ -1,76 +1,141 @@
+import { FaComment, FaHeart } from "react-icons/fa6";
+import { IoImageOutline } from "react-icons/io5";
+import imageProfile from "../assets/img/me.jpg";
+
 export default function Home() {
   return (
     <>
-      <h1>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ea quidem eum
-        odit repudiandae architecto necessitatibus alias in officiis, placeat
-        inventore molestiae ipsam quasi qui cupiditate neque. Commodi eius
-        provident numquam distinctio fugit eum exercitationem perspiciatis ut.
-        In quia perspiciatis repudiandae deleniti nesciunt quo facere beatae
-        explicabo. Quidem facilis, quam maxime voluptatibus minus nihil
-        molestias distinctio. Dignissimos quis nemo voluptatum quidem dolorem
-        officia officiis velit, tempore, cupiditate atque necessitatibus harum
-        blanditiis laudantium commodi minus quisquam. Harum impedit totam sed
-        laborum, nobis odit magni nam itaque voluptas ab fugiat rerum quisquam
-        nulla reprehenderit quas distinctio quo unde facilis numquam debitis
-        perferendis tempore. Nisi cupiditate pariatur optio natus illo ullam
-        quidem aliquid. Ut fugiat alias rem autem tenetur aliquid ducimus
-        corporis, in maiores tempore at expedita dignissimos illum labore
-        cupiditate magni repellat quam eveniet exercitationem distinctio a.
-        Illo, fuga? Optio laudantium architecto laboriosam tempora adipisci a
-        placeat laborum necessitatibus unde! Earum quisquam nihil omnis, tempore
-        necessitatibus animi exercitationem minima, eaque autem quos ea
-        voluptatibus ullam dolor a tenetur molestiae dicta debitis commodi non
-        ut esse, ipsum est corporis. Ab illum itaque voluptatibus doloremque.
-        Fuga ut, eveniet dolores quo magnam voluptas ad nesciunt pariatur! Harum
-        nam unde mollitia delectus tenetur doloremque dolore placeat rerum hic
-        animi quibusdam soluta voluptatibus alias architecto tempora velit,
-        aperiam atque adipisci libero fugiat illum, distinctio quia laboriosam
-        temporibus? Est explicabo dolorem perspiciatis illo qui voluptates
-        laborum, magni fugiat eos, rem, expedita incidunt nulla adipisci unde
-        cum tempora vel ipsa provident architecto mollitia sed! Quidem autem
-        obcaecati eveniet officiis ad at consectetur mollitia illum, quae
-        molestias impedit est doloremque itaque perspiciatis nobis, nisi
-        pariatur. Temporibus eos voluptatibus, pariatur, aliquam quo a fugit ad
-        aut sequi maxime necessitatibus sunt molestias. Eum qui commodi officia
-        saepe esse soluta, tempora, mollitia a eveniet placeat vitae natus
-        repudiandae quam vero quidem. Odit, culpa distinctio. Temporibus,
-        dolorum odit! Quidem, architecto ipsa esse fugiat odio itaque hic
-        doloribus nam ut? Nemo amet id asperiores. Deserunt voluptatibus sed
-        facere amet aperiam optio similique laboriosam incidunt commodi.
-        Laboriosam officiis accusamus alias iure sint officia praesentium aut
-        perspiciatis, nemo error cum illum similique deserunt perferendis, quia
-        libero quaerat! Vitae ipsum nihil sapiente eligendi, labore vel adipisci
-        facere sint quasi quia nemo provident expedita, quos repudiandae
-        deserunt temporibus esse aperiam minima dignissimos eius beatae autem!
-        Temporibus accusamus at iste nostrum deserunt delectus. Molestiae quo
-        maiores autem. Quam repellat dicta inventore voluptatem rem nulla
-        voluptas minus, possimus architecto tempora itaque beatae.
-      </h1>
-      <h2>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nisi alias,
-        recusandae et numquam eligendi id vitae necessitatibus magnam eos? A
-        doloremque minima enim nesciunt accusamus voluptatem, deleniti
-        temporibus facilis eveniet tenetur, odio delectus error hic. Distinctio
-        reprehenderit quibusdam corrupti ab cumque, ea excepturi eaque quis sit.
-        Necessitatibus, qui mollitia. Debitis rerum minima illo veritatis animi
-        impedit mollitia maiores tempore. Voluptate possimus quo eius temporibus
-        sed quam similique voluptas qui magni dolorem! Est maiores ipsum quasi
-        tenetur perspiciatis quos distinctio repellat magni ut, dicta, ducimus
-        quisquam recusandae corporis minus nostrum fugit cupiditate hic laborum
-        unde deleniti, nisi voluptatibus voluptatem ipsa? Dolor excepturi
-        doloribus, fuga quidem obcaecati perferendis deserunt facilis eos. Sed,
-        consequatur rerum nisi est similique inventore, omnis, velit porro
-        laudantium ex adipisci fugit repudiandae hic! Accusantium, aliquid
-        cumque nemo voluptate consequatur quas, fuga rem doloribus iste in quod
-        nihil ex expedita omnis ea atque! Harum ducimus sunt repellat quos
-        tenetur cum autem? Sed iusto aliquam excepturi delectus in autem aliquid
-        officia, ducimus impedit laborum dignissimos deserunt optio quaerat
-        labore sit facere ullam! Sunt quisquam similique dolorem, perspiciatis
-        debitis deserunt labore ex. Non delectus consectetur suscipit aliquid
-        dolorum molestiae, soluta eveniet debitis consequatur quasi. Illo, ea.
-        Facere beatae laudantium ut numquam.
-      </h2>
+      <div className=" max-w-screen-lg p-2 mx-auto">
+        <h1 className="text-3xl font-bold mb-6 ">Home</h1>
+
+        {/* Input Box */}
+        <div className="bg-[#262626] p-5 rounded-lg mb-6 flex items-center justify-between">
+          <img
+            src={imageProfile}
+            className="rounded-full w-10 h-10"
+            alt="Profile"
+          />
+          <input
+            type="text"
+            placeholder="What is happening?!"
+            className="w-full bg-transparent text-white px-3 focus:outline-none"
+          />
+          <div className="flex items-center gap-2">
+            <button className="text-green-500 text-xl">
+              <IoImageOutline />
+            </button>
+            <button className="bg-green-600 text-white px-5 py-2 rounded-lg">
+              Post
+            </button>
+          </div>
+        </div>
+
+        {/* Post 1 */}
+        <div className="bg-[#262626] p-5 rounded-lg mb-6">
+          <div className="flex items-center gap-3 mb-3">
+            <img
+              src={imageProfile}
+              className="rounded-full w-16 h-16"
+              alt="Profile"
+            />
+            <div>
+              <h2 className="text-xl font-bold">Indah Pra Karya</h2>
+              <p className="text-gray-400 text-md">@indahpra • 4h</p>
+            </div>
+          </div>
+          <p className="text-lg mb-3">
+            Kalian pernah ga sih bet on saving? Jadi by calculation sebenernya
+            kita ga survive sampai tanggal tertentu...
+          </p>
+          <div className="flex gap-6 text-gray-400 text-lg">
+            <span className="flex items-center gap-2">
+              <FaHeart /> 36
+            </span>
+            <span className="flex items-center gap-2">
+              <FaComment /> 381 Replies
+            </span>
+          </div>
+        </div>
+
+        {/* Post 2 */}
+        <div className="bg-[#262626] p-5 rounded-lg mb-6">
+          <div className="flex items-center gap-3 mb-3">
+            <img
+              src={imageProfile}
+              className="rounded-full w-16 h-16"
+              alt="Profile"
+            />
+            <div>
+              <h2 className="text-xl font-bold">Mona</h2>
+              <p className="text-gray-400 text-md">@mnonarizqa • 17h</p>
+            </div>
+          </div>
+          <p className="text-lg mb-3">
+            Pernah nggak dapet dream job terus lama-lama ngerasa lah kok tidak
+            sesuai harapan dan jadi fall out of love dengan job tsb?
+          </p>
+          <div className="flex gap-6 text-gray-400 text-lg">
+            <span className="flex items-center gap-2">
+              <FaHeart /> 293
+            </span>
+            <span className="flex items-center gap-2">
+              <FaComment /> 381 Replies
+            </span>
+          </div>
+        </div>
+
+        {/* Post 3 */}
+        <div className="bg-[#262626] p-5 rounded-lg mb-6">
+          <div className="flex items-center gap-3 mb-3">
+            <img
+              src={imageProfile}
+              className="rounded-full w-16 h-16"
+              alt="Profile"
+            />
+            <div>
+              <h2 className="text-xl font-bold">tuantigabelas</h2>
+              <p className="text-gray-400 text-md">@tuantigabelas • 10h</p>
+            </div>
+          </div>
+          <p className="text-lg mb-3">
+            Dibanding rekan-rekan media menginterview saya terkait issue yang
+            ramai, ada baiknya interview instansi yang ngasih izin...
+          </p>
+          <div className="flex gap-6 text-gray-400 text-lg">
+            <span className="flex items-center gap-2">
+              <FaHeart /> 293
+            </span>
+            <span className="flex items-center gap-2">
+              <FaComment /> 381 Replies
+            </span>
+          </div>
+        </div>
+
+        {/* Post 4 */}
+        <div className="bg-[#262626] p-5 rounded-lg mb-6">
+          <div className="flex items-center gap-3 mb-3">
+            <img
+              src={imageProfile}
+              className="rounded-full w-16 h-16"
+              alt="Profile"
+            />
+            <div>
+              <h2 className="text-xl font-bold">Compounding Quality</h2>
+              <p className="text-gray-400 text-md">@QCompounding • Jul 25</p>
+            </div>
+          </div>
+          <p className="text-lg mb-3">52 Books you should know:</p>
+          <img src={imageProfile} alt="Books" className="rounded-lg w-full" />
+          <div className="flex gap-6 text-gray-400 text-lg mt-3">
+            <span className="flex items-center gap-2">
+              <FaHeart /> 293
+            </span>
+            <span className="flex items-center gap-2">
+              <FaComment /> 381 Replies
+            </span>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

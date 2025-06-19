@@ -13,48 +13,49 @@ export default function LeftBar() {
       <nav className="space-y-4">
         <NavLink
           to="/"
-          className="flex items-center gap-4 text-2xl text-gray-300 hover:text-green-400 transition"
+          className="flex items-center gap-4 text-xl text-gray-300 hover:text-green-400 transition"
         >
-          <IoMdHome className="text-2xl" />
+          <IoMdHome className="text-xl" />
           Home
         </NavLink>
 
         <NavLink
           to="/search"
-          className="flex items-center gap-4 text-2xl text-gray-300 hover:text-green-400 transition"
+          className="flex items-center gap-4 text-xl text-gray-300 hover:text-green-400 transition"
         >
-          <LuUserRoundSearch className="text-2xl" />
+          <LuUserRoundSearch className="text-xl" />
           Search
         </NavLink>
 
         <NavLink
           to="/follows"
-          className="flex items-center gap-4 text-2xl text-gray-300 hover:text-green-400 transition"
+          className="flex items-center gap-4 text-xl text-gray-300 hover:text-green-400 transition"
         >
-          <FaRegHeart className="text-2xl" />
+          <FaRegHeart className="text-xl" />
           Follows
         </NavLink>
 
         <NavLink
           to="/profile"
-          className="flex items-center gap-4 text-2xl text-gray-300 hover:text-green-400 transition"
+          className="flex items-center gap-4 text-xl text-gray-300 hover:text-green-400 transition"
         >
-          <CgProfile className="text-2xl" />
+          <CgProfile className="text-xl" />
           Profile
         </NavLink>
       </nav>
 
-      <Button className="bg-green-400 w-full py-3 text-lg font-semibold rounded-2xl mt-8 hover:bg-green-500 transition">
+      <Button className="bg-green-400 w-full py-3 text-lg font-semibold rounded-xl mt-8 hover:bg-green-500 transition">
         Create Post
       </Button>
 
-      <Button
-        // onClick={clearUser}
-        className="flex items-center gap-4 text-2xl text-gray-300 hover:text-green-400 transition mt-auto"
-      >
-        <RiLogoutBoxLine className="text-2xl" />
-        Logout
-      </Button>
+      <div className="flex-grow" />
+
+      <NavLink to="/login">
+        <Button className="flex items-center gap-4 text-xl text-gray-300 hover:text-green-400 transition">
+          <RiLogoutBoxLine className="text-xl" />
+          Logout
+        </Button>
+      </NavLink>
     </div>
   );
 }
