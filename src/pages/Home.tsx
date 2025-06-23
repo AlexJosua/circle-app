@@ -24,7 +24,7 @@ export default function Home() {
             <button className="text-green-500 text-xl">
               <IoImageOutline />
             </button>
-            <button className="bg-green-600 text-white px-5 py-2 rounded-lg">
+            <button className="bg-green-900 hover:bg-green-400 text-white px-5 py-2 rounded-lg">
               Post
             </button>
           </div>

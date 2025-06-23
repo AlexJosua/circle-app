@@ -1,28 +1,12 @@
-import { FaComment, FaHeart } from "react-icons/fa6";
 import gambar1 from "../assets/img/media/Albert Einstein.jpeg";
-import gambar2 from "../assets/img/media/squidwat2.jpeg";
-import gambar3 from "../assets/img/media/deadpool2.jpeg";
-import gambar4 from "../assets/img/media/ora.jpeg";
-import gambar5 from "../assets/img/media/sparta.jpeg";
-import gambar6 from "../assets/img/media/spidey.jpeg";
-import gambar7 from "../assets/img/media/rats.jpeg";
-import gambar8 from "../assets/img/media/stone.jpeg";
+
 import { useState } from "react";
 import EditProfileButton from "@/features/ProfilePages/EditProfile";
+import AllPost from "@/features/ProfilePages/Allpost";
+import Media from "@/features/ProfilePages/Media";
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState("all");
-
-  const GambarMedia = [
-    gambar1,
-    gambar2,
-    gambar3,
-    gambar8,
-    gambar6,
-    gambar7,
-    gambar5,
-    gambar4,
-  ];
 
   return (
     <div className=" max-w-screen-lg p-2 mx-auto">
@@ -76,79 +60,7 @@ const Profile = () => {
 
       {/* Content */}
       <div className="mt-6">
-        {activeTab === "all" ? (
-          <>
-            {/* Post 1 */}
-            <div className="bg-[#262626] p-4 rounded-lg mb-4">
-              <div className="flex items-center gap-3 mb-3">
-                <img
-                  src={gambar1}
-                  className="rounded-full w-10 h-10"
-                  alt="User"
-                />
-                <div>
-                  <h2 className="text-md font-bold">✨ Albert ✨</h2>
-                  <p className="text-gray-400 text-sm">@albert • 4h</p>
-                </div>
-              </div>
-              <p className="text-sm mb-2">
-                Well beauty is in the eye of the beholder
-              </p>
-              <div className="flex gap-4 text-gray-400 text-sm">
-                <span className="flex items-center gap-1">
-                  <FaHeart /> 24
-                </span>
-                <span className="flex items-center gap-1">
-                  <FaComment /> 381 Replies
-                </span>
-              </div>
-            </div>
-
-            {/* Post 2 with Image */}
-            <div className="bg-[#262626] p-4 rounded-lg mb-4">
-              <div className="flex items-center gap-3 mb-3">
-                <img
-                  src={gambar1}
-                  className="rounded-full w-10 h-10"
-                  alt="User"
-                />
-                <div>
-                  <h2 className="text-md font-bold">✨ Albert ✨</h2>
-                  <p className="text-gray-400 text-sm">@albert • 12h</p>
-                </div>
-              </div>
-              <p className="text-sm mb-2">
-                Yg miss menurut gw minum sih. Mango lassi ok aja, mangga
-                melimpah tp sisanya yauda, gw punya standar lbh tinggi di
-                goodlife 🏾
-              </p>
-              <img
-                src={gambar1}
-                className="rounded-lg w-full mb-2"
-                alt="Post Media"
-              />
-              <div className="flex gap-4 text-gray-400 text-sm">
-                <span className="flex items-center gap-1">
-                  <FaHeart /> 75
-                </span>
-                <span className="flex items-center gap-1">
-                  <FaComment /> 102 Replies
-                </span>
-              </div>
-            </div>
-          </>
-        ) : (
-          <div className="text-gray-400 text-center p-6 grid grid-cols-3 ">
-            {GambarMedia.map((hasil, index) => (
-              <img
-                key={index}
-                src={hasil}
-                className="rounded-lg w-full border-1 border-yellow-300"
-                alt={`Media ${index + 1}`}
-              />
-            ))}
-          </div>
-        )}
+        {activeTab === "all" ? <AllPost /> : <Media />}
       </div>
     </div>
   );

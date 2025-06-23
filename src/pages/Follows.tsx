@@ -1,4 +1,4 @@
-import Followers from "@/features/FollowPages/followers";
+import Followers from "@/features/FollowPages/Followers";
 import Unfollowers from "@/features/FollowPages/Unfollowers";
 import { useState } from "react";
 
