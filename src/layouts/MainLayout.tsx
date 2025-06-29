@@ -1,7 +1,7 @@
 import React from "react";
-import LeftBar from "../components/LeftBar";
-import RightBar from "../components/RightBar";
 import { Outlet } from "react-router-dom";
+import LeftBar from "@/layouts/LeftBar";
+import RightBar from "./RightBar";
 
 export default function MainLayout() {
   return (

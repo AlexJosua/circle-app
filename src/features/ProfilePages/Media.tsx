@@ -21,10 +21,10 @@ const GambarMedia = [
 export default function Media() {
   return (
     <div className="text-gray-400 text-center p-6 grid grid-cols-3 ">
-      {GambarMedia.map((hasil, index) => (
+      {GambarMedia.map((photo, index) => (
         <img
           key={index}
-          src={hasil}
+          src={photo}
           className="rounded-lg w-full border-1 border-yellow-300"
           alt={`Media ${index + 1}`}
         />

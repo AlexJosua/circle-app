@@ -1,6 +1,6 @@
-import Footer from "./components-rightBar/Footer";
-import SuggestedProfile from "./components-rightBar/SuggestedProfile";
-import UserProfile from "./components-rightBar/UserProfile";
+import Footer from "@/components/components-rightBar/Footer";
+import SuggestedProfile from "@/components/components-rightBar/SuggestedProfile";
+import UserProfile from "@/components/components-rightBar/UserProfile";
 import { useLocation } from "react-router-dom";
 
 export default function RightBar() {

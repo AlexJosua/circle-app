@@ -5,6 +5,7 @@ import Profile from "../pages/Profile";
 import Follows from "../pages/Follows";
 import Search from "../pages/Search";
 import ProtectedRoute from "../components/protectedRoutes";
+import PostCommentsPage from "@/pages/PostCommentsPage";
 
 const protectedRoutes: RouteObject = {
   path: "/",
@@ -29,6 +30,10 @@ const protectedRoutes: RouteObject = {
     {
       path: "search",
       element: <Search />,
+    },
+    {
+      path: "post/:id",
+      element: <PostCommentsPage />,
     },
   ],
 };
