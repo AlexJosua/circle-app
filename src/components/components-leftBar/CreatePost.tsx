@@ -2,7 +2,6 @@
 import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { FaRegImage } from "react-icons/fa";
-import imageProfile from "../../assets/img/me.jpg";
 import { useEffect, useState } from "react";
 import { createPost } from "@/services/postService";
 import { getMyProfile } from "@/services/userServices";

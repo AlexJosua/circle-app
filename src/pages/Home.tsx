@@ -4,6 +4,7 @@ import imageProfile from "../assets/img/user_male_circle_50px.png";
 import { useEffect, useState } from "react";
 import { getAllPosts } from "@/services/postService";
 import { Link } from "react-router-dom";
+import InputBox from "@/features/homePages/inputBox";
 
 type Post = {
   id: number;
@@ -41,27 +42,7 @@ export default function Home() {
     <div className="max-w-screen-lg p-2 mx-auto">
       <h1 className="text-3xl font-bold mb-6">Home</h1>
 
-      {/* Input Box */}
-      <div className="bg-[#262626] p-5 rounded-lg mb-6 flex items-center justify-between">
-        <img
-          src={imageProfile}
-          className="rounded-full w-10 h-10"
-          alt="Profile"
-        />
-        <input
-          type="text"
-          placeholder="Make Your Post here"
-          className="w-full bg-transparent text-white px-3 focus:outline-none"
-        />
-        <div className="flex items-center gap-2">
-          <button className="text-green-500 text-xl">
-            <IoImageOutline />
-          </button>
-          <button className="bg-green-900 hover:bg-green-400 text-white px-5 py-2 rounded-lg">
-            Post
-          </button>
-        </div>
-      </div>
+      <InputBox />
 
       {/* Post List */}
       {posts.map((post) => (

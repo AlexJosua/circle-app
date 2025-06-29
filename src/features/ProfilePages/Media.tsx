@@ -1,32 +1,39 @@
-import gambar1 from "../../assets/img/media/Albert Einstein.jpeg";
-import gambar2 from "../../assets/img/media/squidwat2.jpeg";
-import gambar3 from "../../assets/img/media/deadpool2.jpeg";
-import gambar4 from "../../assets/img/media/ora.jpeg";
-import gambar5 from "../../assets/img/media/sparta.jpeg";
-import gambar6 from "../../assets/img/media/spidey.jpeg";
-import gambar7 from "../../assets/img/media/rats.jpeg";
-import gambar8 from "../../assets/img/media/stone.jpeg";
+import { useEffect, useState } from "react";
+import { getPostsByUserId } from "@/services/postService";
+import imageFallback from "../../assets/img/me.jpg";
 
-const GambarMedia = [
-  gambar1,
-  gambar2,
-  gambar3,
-  gambar8,
-  gambar6,
-  gambar7,
-  gambar5,
-  gambar4,
-];
+type Post = {
+  id: number;
+  photo?: string;
+};
 
-export default function Media() {
+export default function Media({ userId }: { userId: string }) {
+  const [mediaPosts, setMediaPosts] = useState<Post[]>([]);
+
+  useEffect(() => {
+    const fetchMediaPosts = async () => {
+      try {
+        const posts = await getPostsByUserId(userId);
+        console.log("DATA POST DARI BACKEND:", posts); // 👈 tambahkan ini
+        const filtered = posts.filter((post: Post) => post.photo);
+        setMediaPosts(filtered);
+      } catch (error) {
+        console.error("Gagal mengambil media post:", error);
+      }
+    };
+
+    fetchMediaPosts();
+  }, [userId]);
+
   return (
-    <div className="text-gray-400 text-center p-6 grid grid-cols-3 ">
-      {GambarMedia.map((photo, index) => (
+    <div className="text-gray-400 text-center p-6 grid grid-cols-3 gap-2">
+      {mediaPosts.map((post) => (
         <img
-          key={index}
-          src={photo}
+          key={post.id}
+          src={`http://localhost:3000${post.photo}`}
           className="rounded-lg w-full border-1 border-yellow-300"
-          alt={`Media ${index + 1}`}
+          alt="User Media"
+          onError={(e) => (e.currentTarget.src = imageFallback)}
         />
       ))}
     </div>
