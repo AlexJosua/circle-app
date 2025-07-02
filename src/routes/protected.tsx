@@ -6,6 +6,7 @@ import Follows from "../pages/Follows";
 import Search from "../pages/Search";
 import ProtectedRoute from "../components/protectedRoutes";
 import PostCommentsPage from "@/pages/PostCommentsPage";
+import UserProfile from "@/pages/OtherProfile";
 
 const protectedRoutes: RouteObject = {
   path: "/",
@@ -34,6 +35,10 @@ const protectedRoutes: RouteObject = {
     {
       path: "post/:id",
       element: <PostCommentsPage />,
+    },
+    {
+      path: "profile/:username",
+      element: <UserProfile />,
     },
   ],
 };

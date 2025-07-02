@@ -1,5 +1,4 @@
 import { IoImageOutline } from "react-icons/io5";
-import imageProfile from "../../assets/img/user_male_circle_50px.png";
 import { useEffect, useState } from "react";
 import { getMyProfile } from "@/services/userServices";
 import { createPost } from "@/services/postService";

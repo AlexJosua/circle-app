@@ -3,10 +3,11 @@ import api from "../lib/axios";
 //Login
 export const loginUser = async (email: string, password: string) => {
   const response = await api.post("/auth/login", { email, password });
-  const token = response.data.token;
+  const { token, user } = response.data;
 
-  if (token) {
+  if (token && user?.id) {
     localStorage.setItem("token", token);
+    localStorage.setItem("userId", user.id);
   }
 
   return response.data;
@@ -15,6 +16,7 @@ export const loginUser = async (email: string, password: string) => {
 //Logout
 export const logoutUser = () => {
   localStorage.removeItem("token");
+  localStorage.removeItem("userId");
 };
 
 //Register

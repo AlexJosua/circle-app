@@ -71,7 +71,7 @@ export default function EditProfileButton() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="absolute right-6 -bottom-11 bg-[#262626] text-white px-4 py-1 rounded-full text-sm border-gray-400 border-1">
+        <Button className="absolute right-6 -bottom-14 bg-[#262626] text-white px-4 py-1 rounded-full text-sm border-gray-400 border-1">
           Edit Profile
         </Button>
       </DialogTrigger>

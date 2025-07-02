@@ -1,7 +1,7 @@
 import api from "@/lib/axios";
 
 export const getAllPosts = async () => {
-  const res = await api.get("/post");
+  const res = await api.get("/posts");
   return res.data.data;
 };
 

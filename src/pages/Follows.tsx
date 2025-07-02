@@ -1,9 +1,17 @@
+import { useState, useEffect } from "react";
+import Following from "@/features/FollowPages/Following";
 import Followers from "@/features/FollowPages/Followers";
-import Unfollowers from "@/features/FollowPages/Unfollowers";
-import { useState } from "react";
 
 function Follows() {
   const [activeTab, setActiveTab] = useState("follow");
+  const [userId, setUserId] = useState<string>("");
+
+  useEffect(() => {
+    const id = localStorage.getItem("userId");
+    if (id) {
+      setUserId(id);
+    }
+  }, []);
 
   return (
     <>
@@ -16,7 +24,7 @@ function Follows() {
           }`}
           onClick={() => setActiveTab("follow")}
         >
-          Followers
+          Following
         </button>
         <button
           className={`flex-1 text-center py-2 ${
@@ -26,18 +34,20 @@ function Follows() {
           }`}
           onClick={() => setActiveTab("unfollow")}
         >
-          Unfollowers
+          Followers
         </button>
       </div>
 
-      {activeTab === "follow" ? (
-        <>
-          <Followers />
-        </>
+      {userId ? (
+        activeTab === "follow" ? (
+          <Following />
+        ) : (
+          <Followers userId={userId} />
+        )
       ) : (
-        <>
-          <Unfollowers />
-        </>
+        <p className="text-white p-4">
+          User belum login atau userId tidak ditemukan.
+        </p>
       )}
     </>
   );

@@ -1,8 +1,9 @@
 import { FaComment, FaHeart } from "react-icons/fa6";
-import { IoImageOutline } from "react-icons/io5";
 import imageProfile from "../assets/img/user_male_circle_50px.png";
 import { useEffect, useState } from "react";
 import { getAllPosts } from "@/services/postService";
+import { likePost, unlikePost } from "@/services/likeservices";
+import { getMyProfile } from "@/services/userServices";
 import { Link } from "react-router-dom";
 import InputBox from "@/features/homePages/inputBox";
 
@@ -16,6 +17,7 @@ type Post = {
     username: string;
     photo?: string;
   };
+  likes?: { userId: string }[];
   _count?: {
     likes: number;
     comments: number;
@@ -24,29 +26,63 @@ type Post = {
 
 export default function Home() {
   const [posts, setPost] = useState<Post[]>([]);
+  const [likes, setLikes] = useState<Record<number, number>>({});
+  const [likedPosts, setLikedPosts] = useState<Record<number, boolean>>({});
+  const [currentUserId, setCurrentUserId] = useState<string>("");
 
   useEffect(() => {
-    const fetchPosts = async () => {
+    const fetchData = async () => {
       try {
-        const data = await getAllPosts();
-        setPost(data);
+        const postsData = await getAllPosts();
+        const userData = await getMyProfile();
+        setCurrentUserId(userData.id);
+        setPost(postsData);
+
+        const initialLikes: Record<number, number> = {};
+        const initialLikedPosts: Record<number, boolean> = {};
+
+        postsData.forEach((post: Post) => {
+          initialLikes[post.id] = post._count?.likes ?? 0;
+          initialLikedPosts[post.id] =
+            post.likes?.some(
+              (like: { userId: string }) => like.userId === userData.id
+            ) ?? false;
+        });
+
+        setLikes(initialLikes);
+        setLikedPosts(initialLikedPosts);
       } catch (error) {
-        console.log("gagal ambil post:", error);
+        console.log("Gagal ambil data post atau user:", error);
       }
     };
 
-    fetchPosts();
+    fetchData();
   }, []);
+
+  const handleLike = async (postId: number) => {
+    try {
+      if (likedPosts[postId]) {
+        await unlikePost(postId);
+        setLikedPosts((prev) => ({ ...prev, [postId]: false }));
+        setLikes((prev) => ({ ...prev, [postId]: (prev[postId] || 1) - 1 }));
+      } else {
+        await likePost(postId);
+        setLikedPosts((prev) => ({ ...prev, [postId]: true }));
+        setLikes((prev) => ({ ...prev, [postId]: (prev[postId] || 0) + 1 }));
+      }
+    } catch (error) {
+      console.error("Gagal mengubah like:", error);
+    }
+  };
 
   return (
     <div className="max-w-screen-lg p-2 mx-auto">
       <h1 className="text-3xl font-bold mb-6">Home</h1>
-
       <InputBox />
 
       {/* Post List */}
       {posts.map((post) => (
-        <Link to={`/post/${post.id}`}>
+        <Link to={`/post/${post.id}`} key={post.id}>
           <div className="bg-[#262626] p-5 rounded-lg mb-6 hover:bg-gray-900">
             <div className="flex items-center gap-3 mb-3">
               <img
@@ -77,11 +113,21 @@ export default function Home() {
               />
             )}
 
-            <div className="flex gap-6 text-gray-400 text-lg">
-              <span className="flex items-center gap-2">
-                <FaHeart /> {post._count?.likes ?? 0}
-              </span>
-              <span className="flex items-center gap-2">
+            <div className="flex gap-6 text-lg">
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleLike(post.id);
+                }}
+                className={`flex items-center gap-2 ${
+                  likedPosts[post.id] ? "text-red-500" : "text-gray-400"
+                }`}
+              >
+                <FaHeart />
+                {likes[post.id] ?? 0}
+              </button>
+
+              <span className="flex items-center gap-2 text-gray-400">
                 <FaComment /> {post._count?.comments ?? 0} Replies
               </span>
             </div>

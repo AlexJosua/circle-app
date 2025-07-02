@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
 import imageProfile from "../../assets/img/me.jpg";
 import { getMyProfile } from "@/services/userServices";
+import EditProfileButton from "@/features/ProfilePages/EditProfile";
 
 type User = {
   name: string;
   username: string;
   photo?: string;
   bio?: string;
-  followers?: number;
-  following?: number;
+  _count: {
+    followers?: number;
+    following?: number;
+  };
 };
 
 export default function UserProfile() {
@@ -43,9 +46,10 @@ export default function UserProfile() {
             alt="Profile"
             className="w-20 h-20 border-4 border-[#191919] rounded-full ml-4 mt-[-30px]"
           />
-          <button className="ml-auto bg-transparent border border-gray-400 px-4 py-1 rounded-full text-white text-sm hover:bg-gray-700">
-            Edit Profile
-          </button>
+
+          <div className="absolute -right-4 -top-2">
+            <EditProfileButton />
+          </div>
         </div>
 
         <div className="mt-2 px-4">
@@ -56,11 +60,11 @@ export default function UserProfile() {
           </p>
         </div>
 
-        <div className="mt-4 flex items-center gap-4 px-4 text-sm">
-          <span className="font-bold">{user.following ?? 0}</span>
-          <span className="text-gray-400">Following</span>
-          <span className="font-bold">{user.followers ?? 0}</span>
+        <div className="mt-4 flex items-center gap-2 px-4 text-sm">
+          <span className="font-bold">{user._count.followers ?? 0}</span>
           <span className="text-gray-400">Followers</span>
+          <span className="font-bold">{user._count.following ?? 0}</span>
+          <span className="text-gray-400">Following</span>
         </div>
       </div>
     </>
