@@ -1,13 +1,7 @@
 import { useEffect, useState } from "react";
 import { getFollowingUsers, unfollowUser } from "@/services/followServices";
 import fallbackImg from "@/assets/img/me.jpg";
-
-type User = {
-  id: string;
-  name: string;
-  username: string;
-  photo?: string;
-};
+import type { User } from "@/types";
 
 export default function Following() {
   const [following, setFollowing] = useState<User[]>([]);

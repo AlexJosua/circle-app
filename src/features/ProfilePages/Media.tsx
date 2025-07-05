@@ -28,13 +28,17 @@ export default function Media({ userId }: { userId: string }) {
   return (
     <div className="text-gray-400 text-center p-6 grid grid-cols-3 gap-2">
       {mediaPosts.map((post) => (
-        <img
+        <div
           key={post.id}
-          src={`http://localhost:3000${post.photo}`}
-          className="rounded-lg w-full border-1 border-yellow-300"
-          alt="User Media"
-          onError={(e) => (e.currentTarget.src = imageFallback)}
-        />
+          className="w-full aspect-square overflow-hidden rounded-lg border border-yellow-300"
+        >
+          <img
+            src={`http://localhost:3000${post.photo}`}
+            alt="User Media"
+            onError={(e) => (e.currentTarget.src = imageFallback)}
+            className="w-full h-full object-cover"
+          />
+        </div>
       ))}
     </div>
   );

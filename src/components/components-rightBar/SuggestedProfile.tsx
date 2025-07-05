@@ -29,7 +29,9 @@ export default function SuggestedProfile() {
   return (
     <div
       className={` bg-[#262626] p-4 rounded-lg ${
-        isProfilePage ? "w-full" : "max-h-[370px] overflow-y-auto"
+        isProfilePage
+          ? "w-full max-h-174 overflow-y-auto"
+          : "max-h-[370px] overflow-y-auto"
       } `}
     >
       <h2 className="text-lg font-semibold mb-4">Suggested for you</h2>

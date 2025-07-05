@@ -6,6 +6,7 @@ import { likePost, unlikePost } from "@/services/likeservices";
 import { getMyProfile } from "@/services/userServices";
 import { Link } from "react-router-dom";
 import InputBox from "@/features/homePages/inputBox";
+import DropDown from "@/features/homePages/DropDown";
 
 type Post = {
   id: number;
@@ -13,6 +14,7 @@ type Post = {
   photo?: string;
   createdAt: string;
   author: {
+    id: string;
     name: string;
     username: string;
     photo?: string;
@@ -29,6 +31,14 @@ export default function Home() {
   const [likes, setLikes] = useState<Record<number, number>>({});
   const [likedPosts, setLikedPosts] = useState<Record<number, boolean>>({});
   const [currentUserId, setCurrentUserId] = useState<string>("");
+  const [userId, setUserId] = useState<string>("");
+
+  useEffect(() => {
+    const id = localStorage.getItem("userId");
+    if (id) {
+      setUserId(id);
+    }
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -82,9 +92,13 @@ export default function Home() {
 
       {/* Post List */}
       {posts.map((post) => (
-        <Link to={`/post/${post.id}`} key={post.id}>
-          <div className="bg-[#262626] p-5 rounded-lg mb-6 hover:bg-gray-900">
-            <div className="flex items-center gap-3 mb-3">
+        <div
+          key={post.id}
+          className="bg-[#262626] p-5 rounded-lg mb-6 hover:bg-gray-900 relative"
+        >
+          {/* Header: Profile Info & Dropdown */}
+          <div className="flex items-start justify-between mb-3">
+            <div className="flex items-center gap-3">
               <img
                 src={
                   post.author.photo
@@ -103,8 +117,27 @@ export default function Home() {
               </div>
             </div>
 
-            <p className="text-lg mb-3">{post.content}</p>
+            {post.author.id === userId && (
+              <DropDown
+                postId={post.id.toString()}
+                content={post.content}
+                onSuccess={() => {
+                  // refresh data setelah delete
+                  const fetchData = async () => {
+                    const updatedPosts = await getAllPosts();
+                    setPost(updatedPosts);
+                  };
+                  fetchData();
+                }}
+              />
+            )}
+          </div>
 
+          {/* Post content (linkable) */}
+          <Link to={`/post/${post.id}`}>
+            <p className="text-lg mb-3 break-words whitespace-pre-wrap ">
+              {post.content}
+            </p>
             {post.photo && (
               <img
                 src={`http://localhost:3000${post.photo}`}
@@ -112,27 +145,28 @@ export default function Home() {
                 className="rounded-lg w-4/5 mb-3 mx-auto"
               />
             )}
+          </Link>
 
-            <div className="flex gap-6 text-lg">
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleLike(post.id);
-                }}
-                className={`flex items-center gap-2 ${
-                  likedPosts[post.id] ? "text-red-500" : "text-gray-400"
-                }`}
-              >
-                <FaHeart />
-                {likes[post.id] ?? 0}
-              </button>
+          {/* Interactions */}
+          <div className="flex gap-6 text-lg">
+            <button
+              onClick={(e) => {
+                e.preventDefault(); // supaya tidak trigger link saat like
+                handleLike(post.id);
+              }}
+              className={`flex items-center gap-2 ${
+                likedPosts[post.id] ? "text-red-500" : "text-gray-400"
+              }`}
+            >
+              <FaHeart />
+              {likes[post.id] ?? 0}
+            </button>
 
-              <span className="flex items-center gap-2 text-gray-400">
-                <FaComment /> {post._count?.comments ?? 0} Replies
-              </span>
-            </div>
+            <span className="flex items-center gap-2 text-gray-400">
+              <FaComment /> {post._count?.comments ?? 0} Replies
+            </span>
           </div>
-        </Link>
+        </div>
       ))}
     </div>
   );

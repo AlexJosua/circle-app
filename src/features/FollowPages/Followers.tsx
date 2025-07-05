@@ -1,27 +1,37 @@
 import { useEffect, useState } from "react";
-import { getFollowersUsers, followUser } from "@/services/followServices";
+import {
+  getFollowersUsers,
+  followUser,
+  unfollowUser,
+  getFollowingUsers,
+} from "@/services/followServices";
 import fallbackImg from "@/assets/img/me.jpg";
-
-type User = {
-  id: string;
-  name: string;
-  username: string;
-  photo?: string | null;
-};
+import type { User } from "@/types";
 
 export default function Followers({ userId }: { userId: string }) {
   const [followers, setFollowers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
-  const [followingIds, setFollowingIds] = useState<string[]>([]); // simpan siapa yg sudah di-follow
+  const [followingStatus, setFollowingStatus] = useState<
+    Record<string, boolean>
+  >({});
 
   useEffect(() => {
     const fetchFollowers = async () => {
       try {
-        const data = await getFollowersUsers(userId);
-        setFollowers(data);
-        console.log("Fetched followers:", data);
+        const [followersData, followingData] = await Promise.all([
+          getFollowersUsers(userId),
+          getFollowingUsers(userId),
+        ]);
+
+        setFollowers(followersData);
+
+        const initialStatus: Record<string, boolean> = {};
+        followingData.forEach((user: User) => {
+          initialStatus[user.id] = true;
+        });
+        setFollowingStatus(initialStatus);
       } catch (error) {
-        console.error("Gagal mengambil followers:", error);
+        console.error("Gagal mengambil data followers atau following:", error);
       } finally {
         setLoading(false);
       }
@@ -30,12 +40,23 @@ export default function Followers({ userId }: { userId: string }) {
     if (userId) fetchFollowers();
   }, [userId]);
 
-  const handleFollow = async (targetUserId: string) => {
+  const handleToggleFollow = async (targetUserId: string) => {
     try {
-      await followUser(targetUserId);
-      setFollowingIds((prev) => [...prev, targetUserId]);
+      const isFollowed = followingStatus[targetUserId];
+
+      if (isFollowed) {
+        await unfollowUser(targetUserId);
+      } else {
+        await followUser(targetUserId);
+      }
+
+      // Toggle status
+      setFollowingStatus((prev) => ({
+        ...prev,
+        [targetUserId]: !isFollowed,
+      }));
     } catch (err) {
-      console.error("Gagal follow user:", err);
+      console.error("Gagal follow/unfollow user:", err);
     }
   };
 
@@ -71,15 +92,14 @@ export default function Followers({ userId }: { userId: string }) {
             </div>
 
             <button
-              disabled={followingIds.includes(user.id)}
-              onClick={() => handleFollow(user.id)}
+              onClick={() => handleToggleFollow(user.id)}
               className={`border px-4 py-1 rounded-full text-white hover:bg-gray-700 ${
-                followingIds.includes(user.id)
-                  ? "border-gray-600 text-gray-400 cursor-not-allowed"
+                followingStatus[user.id]
+                  ? "border-gray-600 text-gray-400"
                   : "border-gray-400"
               }`}
             >
-              {followingIds.includes(user.id) ? "Following" : "Follow"}
+              {followingStatus[user.id] ? "Unfollow" : "Follow"}
             </button>
           </div>
         ))

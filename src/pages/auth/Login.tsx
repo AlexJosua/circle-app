@@ -27,7 +27,7 @@ export default function Login() {
   return (
     <div className="w-screen h-screen flex justify-center items-center">
       <form onSubmit={handleSubmit(onSubmit)} className="w-96">
-        <h1 className="text-5xl text-green-400 mb-1 font-semibold">circle</h1>
+        <h1 className="text-5xl text-green-400 mb-1 font-semibold">Circle</h1>
         <h2 className="text-4xl my-3">Login account Circle</h2>
 
         <input
