@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getPostsByUserId } from "@/services/postService";
 import imageFallback from "../../assets/img/me.jpg";
+import { Link } from "react-router-dom";
 
 type Post = {
   id: number;
@@ -28,9 +29,10 @@ export default function Media({ userId }: { userId: string }) {
   return (
     <div className="text-gray-400 text-center p-6 grid grid-cols-3 gap-2">
       {mediaPosts.map((post) => (
-        <div
+        <Link
           key={post.id}
-          className="w-full aspect-square overflow-hidden rounded-lg border border-yellow-300"
+          to={`/post/${post.id}`}
+          className="w-full aspect-square overflow-hidden rounded-lg border border-yellow-300 block"
         >
           <img
             src={`http://localhost:3000${post.photo}`}
@@ -38,7 +40,7 @@ export default function Media({ userId }: { userId: string }) {
             onError={(e) => (e.currentTarget.src = imageFallback)}
             className="w-full h-full object-cover"
           />
-        </div>
+        </Link>
       ))}
     </div>
   );

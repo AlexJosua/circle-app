@@ -1,4 +1,3 @@
-// components/CreatePostDialog.tsx
 import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { FaRegImage } from "react-icons/fa";
@@ -11,28 +10,30 @@ type User = {
 };
 
 export function CreatePost() {
-  const [user, setUser] = useState<User | null>(null);
-  const [profilePhoto, setProfilePhoto] = useState<File | null>(null);
-  const [content, setContent] = useState("");
-  const [photo, setPhoto] = useState<File | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState<User | null>(null); // data user
+  const [content, setContent] = useState(""); // isi post
+  const [photo, setPhoto] = useState<File | null>(null); // file yang akan dikirim
+  const [preview, setPreview] = useState<string | null>(null); // preview image
+  const [loading, setLoading] = useState(false); // loading state
 
-  const fetchUser = async () => {
-    try {
-      const data = await getMyProfile();
-      setUser(data);
-      setProfilePhoto(data.photo);
-    } catch (error) {
-      console.error("Gagal mengambil data profil:", error);
-    }
-  };
-
+  // Fetch profil user saat komponen pertama kali dimuat
   useEffect(() => {
-    fetchUser();
-  });
+    const fetchUser = async () => {
+      try {
+        const data = await getMyProfile();
+        setUser(data);
+      } catch (error) {
+        console.error("Gagal mengambil data profil:", error);
+      }
+    };
 
+    fetchUser();
+  }, []);
+
+  // Fungsi ketika user klik "Post"
   const handleCreatePost = async () => {
     if (!content.trim()) return alert("Isi konten dulu dong 😅");
+
     const formData = new FormData();
     formData.append("content", content);
     if (photo) {
@@ -41,15 +42,27 @@ export function CreatePost() {
 
     try {
       setLoading(true);
-      await createPost(formData); // manggil service ke BE
+      await createPost(formData); // panggil API buat posting
+      alert("Post berhasil dibuat 🎉");
+
+      // Reset form setelah posting
       setContent("");
       setPhoto(null);
-      alert("Post berhasil dibuat 🎉");
+      setPreview(null);
     } catch (error) {
       console.error("Gagal post:", error);
       alert("Gagal membuat post");
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Fungsi ketika user memilih gambar
+  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setPhoto(file);
+      setPreview(URL.createObjectURL(file)); // buat URL preview
     }
   };
 
@@ -62,6 +75,7 @@ export function CreatePost() {
       </DialogTrigger>
 
       <DialogContent className="rounded-2xl p-6 bg-[#1a1a1a] text-white max-w-xl border border-gray-700">
+        {/* Foto profil + textarea */}
         <div className="flex justify-between items-start">
           <div className="flex gap-4 w-full">
             <img
@@ -79,8 +93,18 @@ export function CreatePost() {
           </div>
         </div>
 
+        {/* Preview Image */}
+        {preview && (
+          <img
+            src={preview}
+            alt="Preview"
+            className="mt-4 rounded-lg w-full max-h-[300px] object-cover border border-gray-600"
+          />
+        )}
+
         <div className="border-t border-gray-700 my-4" />
 
+        {/* Pilih gambar + tombol post */}
         <div className="flex items-center justify-between">
           <label className="cursor-pointer">
             <FaRegImage className="text-4xl text-green-600" />
@@ -88,10 +112,7 @@ export function CreatePost() {
               type="file"
               accept="image/*"
               className="hidden"
-              onChange={(e) => {
-                const file = e.target.files?.[0];
-                if (file) setPhoto(file);
-              }}
+              onChange={handlePhotoChange}
             />
           </label>
 

@@ -9,15 +9,14 @@ type User = {
 
 export default function InputBox() {
   const [user, setUser] = useState<User | null>(null);
-  const [profilePhoto, setProfilePhoto] = useState<File | null>(null);
   const [content, setContent] = useState("");
   const [photo, setPhoto] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
 
   const fetchUser = async () => {
     try {
       const data = await getMyProfile();
       setUser(data);
-      setProfilePhoto(data.photo);
     } catch (error) {
       console.error("gagal ambil data profile", error);
     }
@@ -25,25 +24,38 @@ export default function InputBox() {
 
   useEffect(() => {
     fetchUser();
-  });
+  }, []);
 
   const handleCreatePost = async () => {
     if (!content.trim()) return alert("Isi konten dulu dong 😅");
+
     const formData = new FormData();
     formData.append("content", content);
-    if (photo) {
-      formData.append("photo", photo);
-    }
+    if (photo) formData.append("photo", photo);
 
     try {
       await createPost(formData);
       setContent("");
       setPhoto(null);
+      setPreview(null);
       alert("post berhasil dibuat");
     } catch (error) {
       console.error("Gagal post", error);
       alert("Gagal Membuat Post");
     }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setPhoto(file);
+      setPreview(URL.createObjectURL(file));
+    }
+  };
+
+  const handleCancelPhoto = () => {
+    setPhoto(null);
+    setPreview(null);
   };
 
   return (
@@ -54,6 +66,7 @@ export default function InputBox() {
           className="rounded-full w-10 h-10"
           alt="Profile"
         />
+
         <input
           type="text"
           placeholder="Make Your Post here"
@@ -61,17 +74,15 @@ export default function InputBox() {
           value={content}
           onChange={(e) => setContent(e.target.value)}
         />
+
         <div className="flex items-center gap-2">
           <label className="text-green-500 text-xl cursor-pointer">
             <IoImageOutline />
             <input
               type="file"
               className="hidden"
-              accept="/image"
-              onChange={(e) => {
-                const file = e.target.files?.[0];
-                if (file) setPhoto(file);
-              }}
+              accept="image/*"
+              onChange={handleFileChange}
             />
           </label>
           <button
@@ -82,6 +93,24 @@ export default function InputBox() {
           </button>
         </div>
       </div>
+
+      {/* ✅ Preview dan tombol Cancel */}
+      {preview && (
+        <div className="relative mb-6 max-w-md mx-auto">
+          <img
+            src={preview}
+            alt="Preview"
+            className="w-full max-h-64 object-contain rounded-lg border border-gray-600"
+          />
+          <button
+            onClick={handleCancelPhoto}
+            className="absolute top-1 right-1 bg-black bg-opacity-50 hover:bg-opacity-80 cursor-pointer text-white rounded-full w-6 h-6 flex items-center justify-center"
+            title="Hapus gambar"
+          >
+            ✖️
+          </button>
+        </div>
+      )}
     </>
   );
 }
