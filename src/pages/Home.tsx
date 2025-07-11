@@ -44,6 +44,7 @@ export default function Home() {
     const fetchData = async () => {
       try {
         const postsData = await getAllPosts();
+        console.log(postsData);
         const userData = await getMyProfile();
         setCurrentUserId(userData.id);
         setPost(postsData);
@@ -98,24 +99,29 @@ export default function Home() {
         >
           {/* Header: Profile Info & Dropdown */}
           <div className="flex items-start justify-between mb-3">
-            <div className="flex items-center gap-3">
-              <img
-                src={
-                  post.author.photo
-                    ? `http://localhost:3000${post.author.photo}`
-                    : imageProfile
-                }
-                className="rounded-full w-16 h-16"
-                alt="Profile"
-              />
-              <div>
-                <h2 className="text-xl font-bold">{post.author.name}</h2>
-                <p className="text-gray-400 text-md">
-                  @{post.author.username} •{" "}
-                  {new Date(post.createdAt).toLocaleString()}
-                </p>
+            <Link to={`/profile/${post.author.username}`}>
+              <div className="flex items-center gap-3">
+                <img
+                  src={
+                    post.author.photo?.startsWith("http")
+                      ? post.author.photo
+                      : post.author.photo
+                      ? `http://localhost:3000${post.author.photo}`
+                      : "/default-profile.png" // optional: fallback kalau nggak ada foto sama sekali
+                  }
+                  className="rounded-full w-16 h-16"
+                  alt="Profile"
+                />
+
+                <div>
+                  <h2 className="text-xl font-bold">{post.author.name}</h2>
+                  <p className="text-gray-400 text-md">
+                    @{post.author.username} •{" "}
+                    {new Date(post.createdAt).toLocaleString()}
+                  </p>
+                </div>
               </div>
-            </div>
+            </Link>
 
             {post.author.id === userId && (
               <DropDown
@@ -140,7 +146,11 @@ export default function Home() {
             </p>
             {post.photo && (
               <img
-                src={`http://localhost:3000${post.photo}`}
+                src={
+                  post.photo?.startsWith("http")
+                    ? post.photo
+                    : `http://localhost:3000${post.photo}`
+                }
                 alt="Post"
                 className="rounded-lg w-4/5 mb-3 mx-auto"
               />

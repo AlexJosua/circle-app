@@ -1,5 +1,5 @@
 // src/pages/PostCommentsPage.tsx
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { FaHeart, FaComment } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
@@ -79,13 +79,16 @@ export default function PostCommentsPage() {
 
   return (
     <div className="max-w-screen-lg mx-auto text-white">
+      <Link to={"/"}>
+        <h1 className="text-3xl font-bold mb-6 ml-3 mt-3">⭠ Home</h1>
+      </Link>
       {/* Post Utama */}
       <div className="bg-[#262626] p-3 rounded-lg mb-4">
         <div className="flex gap-4 mb-3">
           <img
             src={
-              post.author.photo
-                ? `http://localhost:3000${post.author.photo}`
+              post.author.photo?.startsWith("http")
+                ? post.author.photo
                 : imageProfile
             }
             className="w-12 h-12 rounded-full"
@@ -104,9 +107,13 @@ export default function PostCommentsPage() {
 
         {post.photo && (
           <img
-            src={`http://localhost:3000${post.photo}`}
+            src={
+              post.photo.startsWith("http")
+                ? post.photo
+                : `http://localhost:3000${post.photo}`
+            }
             alt="Post"
-            className="rounded-lg w-3/5 mb-3"
+            className="rounded-lg w-3/5 mb-3 object-cover"
           />
         )}
 

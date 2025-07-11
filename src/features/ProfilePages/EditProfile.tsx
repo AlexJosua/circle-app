@@ -85,14 +85,17 @@ export default function EditProfileButton() {
               <img
                 src={
                   photo
-                    ? URL.createObjectURL(photo)
+                    ? URL.createObjectURL(photo) // preview gambar baru
+                    : user.photo?.startsWith("http")
+                    ? user.photo
                     : user.photo
-                    ? `http://localhost:3000${user.photo}`
+                    ? `http://localhost:3000${user.photo}` // jika dari backend lokal
                     : imageProfile
                 }
                 alt="Profile"
                 className="w-full h-full object-cover border-4 border-[#191919] rounded-full"
               />
+
               <label
                 htmlFor="photo"
                 className="absolute inset-0 bg-black bg-opacity-50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 cursor-pointer"

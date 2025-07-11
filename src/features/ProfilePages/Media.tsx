@@ -32,12 +32,15 @@ export default function Media({ userId }: { userId: string }) {
         <Link
           key={post.id}
           to={`/post/${post.id}`}
-          className="w-full aspect-square overflow-hidden rounded-lg border border-yellow-300 block"
+          className="aspect-square overflow-hidden rounded-lg border border-yellow-300 block"
         >
           <img
-            src={`http://localhost:3000${post.photo}`}
-            alt="User Media"
-            onError={(e) => (e.currentTarget.src = imageFallback)}
+            src={
+              post.photo?.startsWith("http")
+                ? post.photo
+                : `http://localhost:3000${post.photo}`
+            }
+            alt="post"
             className="w-full h-full object-cover"
           />
         </Link>

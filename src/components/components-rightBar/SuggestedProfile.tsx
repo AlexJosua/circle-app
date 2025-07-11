@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { getSuggestedUsers } from "@/services/suggestedUser";
+import { followUser } from "@/services/followServices"; // ✅ Tambahkan
 import imageProfile from "@/assets/img/me.jpg";
+import { Link } from "react-router-dom";
 
 type User = {
   id: string;
@@ -26,6 +28,18 @@ export default function SuggestedProfile() {
     fetchSuggested();
   }, []);
 
+  const handleFollow = async (userId: string) => {
+    try {
+      await followUser(userId);
+
+      // Setelah follow berhasil, hapus user dari list suggested
+      setUsers((prev) => prev.filter((user) => user.id !== userId));
+    } catch (err) {
+      console.error("Gagal follow user:", err);
+      alert("Gagal follow user. Silakan coba lagi.");
+    }
+  };
+
   return (
     <div
       className={` bg-[#262626] p-4 rounded-lg ${
@@ -42,21 +56,29 @@ export default function SuggestedProfile() {
         users.map((user) => (
           <div key={user.id} className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
-              <img
-                src={
-                  user.photo
-                    ? `http://localhost:3000${user.photo}`
-                    : imageProfile
-                }
-                alt={user.name}
-                className="w-12 h-12 rounded-full object-cover"
-              />
-              <div>
-                <h3 className="text-sm font-bold">{user.name}</h3>
-                <p className="text-gray-400 text-xs">@{user.username}</p>
-              </div>
+              <Link
+                to={`/profile/${user.username}`}
+                className="relative flex gap-2"
+              >
+                <img
+                  src={
+                    user.photo
+                      ? `http://localhost:3000${user.photo}`
+                      : imageProfile
+                  }
+                  alt={user.name}
+                  className="w-12 h-12 rounded-full object-cover"
+                />
+                <div>
+                  <h3 className="text-sm font-bold">{user.name}</h3>
+                  <p className="text-gray-400 text-xs">@{user.username}</p>
+                </div>
+              </Link>
             </div>
-            <button className="px-4 py-1 text-sm border border-gray-300 rounded-full hover:bg-gray-800">
+            <button
+              className="px-4 py-1 text-sm border border-gray-300 rounded-full hover:bg-gray-800"
+              onClick={() => handleFollow(user.id)} // ✅ Tambahkan aksi follow
+            >
               Follow
             </button>
           </div>

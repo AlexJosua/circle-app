@@ -7,6 +7,7 @@ import {
 } from "@/services/followServices";
 import fallbackImg from "@/assets/img/me.jpg";
 import type { User } from "@/types";
+import { Link } from "react-router-dom";
 
 export default function Followers({ userId }: { userId: string }) {
   const [followers, setFollowers] = useState<User[]>([]);
@@ -73,22 +74,27 @@ export default function Followers({ userId }: { userId: string }) {
             className="flex items-center justify-between p-4 border-b border-gray-700"
           >
             <div className="flex items-center">
-              <img
-                src={
-                  user.photo
-                    ? `http://localhost:3000${user.photo}`
-                    : fallbackImg
-                }
-                onError={(e) =>
-                  ((e.target as HTMLImageElement).src = fallbackImg)
-                }
-                alt={user.name}
-                className="w-12 h-12 rounded-full mr-4 object-cover"
-              />
-              <div>
-                <h2 className="text-lg font-semibold">{user.name}</h2>
-                <p className="text-gray-400">@{user.username}</p>
-              </div>
+              <Link
+                to={`/profile/${user.username}`}
+                className="flex items-center gap-4"
+              >
+                <img
+                  src={
+                    user.photo?.startsWith("http")
+                      ? user.photo
+                      : `http://localhost:3000${user.photo}`
+                  }
+                  onError={(e) =>
+                    ((e.target as HTMLImageElement).src = fallbackImg)
+                  }
+                  alt={user.name}
+                  className="w-12 h-12 rounded-full object-cover"
+                />
+                <div>
+                  <h2 className="text-lg font-semibold">{user.name}</h2>
+                  <p className="text-gray-400">@{user.username}</p>
+                </div>
+              </Link>
             </div>
 
             <button

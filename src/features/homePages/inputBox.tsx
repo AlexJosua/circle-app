@@ -62,11 +62,16 @@ export default function InputBox() {
     <>
       <div className="bg-[#262626] p-5 rounded-lg mb-6 flex items-center justify-between">
         <img
-          src={`http://localhost:3000${user?.photo}`}
+          src={
+            user?.photo
+              ? user.photo.startsWith("http")
+                ? user.photo
+                : `http://localhost:3000${user.photo}`
+              : ""
+          }
           className="rounded-full w-10 h-10"
           alt="Profile"
         />
-
         <input
           type="text"
           placeholder="Make Your Post here"
@@ -74,7 +79,6 @@ export default function InputBox() {
           value={content}
           onChange={(e) => setContent(e.target.value)}
         />
-
         <div className="flex items-center gap-2">
           <label className="text-green-500 text-xl cursor-pointer">
             <IoImageOutline />

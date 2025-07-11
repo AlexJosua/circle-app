@@ -104,9 +104,9 @@ export default function Search() {
                 >
                   <img
                     src={
-                      user.photo
-                        ? `http://localhost:3000${user.photo}`
-                        : imageProfile
+                      user.photo?.startsWith("http")
+                        ? user.photo
+                        : `http://localhost:3000${user.photo}`
                     }
                     alt="profile"
                     className="w-12 h-12 rounded-full object-cover"

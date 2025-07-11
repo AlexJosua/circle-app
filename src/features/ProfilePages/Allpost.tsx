@@ -48,8 +48,8 @@ export default function AllPost({ userId }: { userId: string }) {
             <div className="flex gap-3">
               <img
                 src={
-                  post.author.photo
-                    ? `http://localhost:3000${post.author.photo}`
+                  post.author.photo?.startsWith("http")
+                    ? post.author.photo
                     : imageProfileFallback
                 }
                 className="rounded-full w-10 h-10"
@@ -82,7 +82,11 @@ export default function AllPost({ userId }: { userId: string }) {
               </p>
               {post.photo && (
                 <img
-                  src={`http://localhost:3000${post.photo}`}
+                  src={
+                    post.photo?.startsWith("http")
+                      ? post.photo
+                      : `http://localhost:3000${post.photo}`
+                  }
                   alt="Post Media"
                   className="rounded-lg w-full mb-2"
                 />

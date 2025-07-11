@@ -4,10 +4,7 @@ import { FaRegImage } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { createPost } from "@/services/postService";
 import { getMyProfile } from "@/services/userServices";
-
-type User = {
-  photo?: string;
-};
+import type { User } from "@/types";
 
 export function CreatePost() {
   const [user, setUser] = useState<User | null>(null); // data user
@@ -79,7 +76,7 @@ export function CreatePost() {
         <div className="flex justify-between items-start">
           <div className="flex gap-4 w-full">
             <img
-              src={`http://localhost:3000${user?.photo}`}
+              src={user?.photo}
               alt="avatar"
               className="rounded-full w-10 h-10"
             />

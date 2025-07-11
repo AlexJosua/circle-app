@@ -41,7 +41,7 @@ export default function ProfileHeader({ username }: props) {
       <div className="relative">
         <div className="h-32 w-full bg-gradient-to-r from-green-300 to-yellow-300 rounded-t-lg"></div>
         <img
-          src={`http://localhost:3000${user?.photo}`}
+          src={user.photo ? user.photo : "imageProfile"}
           className="rounded-full border-4 border-gray-900 absolute -bottom-11 left-6 w-25"
           alt="Profile"
         />
@@ -57,11 +57,11 @@ export default function ProfileHeader({ username }: props) {
           <span className="font-bold text-white">
             {user?._count?.followers || 0}
           </span>{" "}
-          Followers
+          Following
           <span className="font-bold text-white ml-2">
             {user?._count?.following || 0}
           </span>{" "}
-          Following{" "}
+          Followers{" "}
         </p>
       </div>
     </div>

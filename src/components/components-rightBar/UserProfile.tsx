@@ -40,9 +40,7 @@ export default function UserProfile() {
 
         <div className="relative flex items-center">
           <img
-            src={
-              user.photo ? `http://localhost:3000${user.photo}` : imageProfile
-            }
+            src={user.photo ? user.photo : imageProfile}
             alt="Profile"
             className="w-20 h-20 border-4 border-[#191919] rounded-full ml-4 mt-[-30px]"
           />
