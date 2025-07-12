@@ -5,7 +5,7 @@ import {
   unfollowUser,
   getFollowingUsers,
 } from "@/services/followServices";
-import imageProfile from "@/assets/img/user_male_circle_50px.png";
+
 import { Link } from "react-router-dom";
 import type { User } from "@/types";
 

@@ -1,6 +1,5 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
 import LeftBar from "@/layouts/LeftBar";
+import { Outlet } from "react-router-dom";
 import RightBar from "./RightBar";
 
 export default function MainLayout() {

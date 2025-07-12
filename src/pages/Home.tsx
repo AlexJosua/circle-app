@@ -1,12 +1,11 @@
-import { FaComment, FaHeart } from "react-icons/fa6";
-import imageProfile from "../assets/img/user_male_circle_50px.png";
-import { useEffect, useState } from "react";
-import { getAllPosts } from "@/services/postService";
-import { likePost, unlikePost } from "@/services/likeservices";
-import { getMyProfile } from "@/services/userServices";
-import { Link } from "react-router-dom";
-import InputBox from "@/features/homePages/inputBox";
 import DropDown from "@/features/homePages/DropDown";
+import InputBox from "@/features/homePages/inputBox";
+import { likePost, unlikePost } from "@/services/likeservices";
+import { getAllPosts } from "@/services/postService";
+import { getMyProfile } from "@/services/userServices";
+import { useEffect, useState } from "react";
+import { FaComment, FaHeart } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 type Post = {
   id: number;
@@ -30,7 +29,6 @@ export default function Home() {
   const [posts, setPost] = useState<Post[]>([]);
   const [likes, setLikes] = useState<Record<number, number>>({});
   const [likedPosts, setLikedPosts] = useState<Record<number, boolean>>({});
-  const [currentUserId, setCurrentUserId] = useState<string>("");
   const [userId, setUserId] = useState<string>("");
 
   useEffect(() => {
@@ -46,7 +44,6 @@ export default function Home() {
         const postsData = await getAllPosts();
         console.log(postsData);
         const userData = await getMyProfile();
-        setCurrentUserId(userData.id);
         setPost(postsData);
 
         const initialLikes: Record<number, number> = {};
